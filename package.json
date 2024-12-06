@@ -4,7 +4,7 @@
   "description": "TypeScript mapper for JSON:API formats to entities",
   "main": "index.js",
   "scripts": {
-
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/baylorpaul/json-api-bridge/issues"
   },
-  "homepage": "https://github.com/baylorpaul/json-api-bridge#readme"
+  "homepage": "https://github.com/baylorpaul/json-api-bridge#readme",
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "ts-jest": "^29.2.5"
+  }
 }
