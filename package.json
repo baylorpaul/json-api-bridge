@@ -1,0 +1,23 @@
+{
+  "name": "@baylorpaul/json-api-bridge",
+  "version": "1.0.0",
+  "description": "TypeScript mapper for JSON:API formats to entities",
+  "main": "index.js",
+  "scripts": {
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/baylorpaul/json-api-bridge.git"
+  },
+  "keywords": [
+    "TypeScript",
+    "JSON:API"
+  ],
+  "author": "Paul Poley",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/baylorpaul/json-api-bridge/issues"
+  },
+  "homepage": "https://github.com/baylorpaul/json-api-bridge#readme"
+}
