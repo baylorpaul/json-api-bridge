@@ -1,6 +1,6 @@
 import {JsonApiDataType} from "./types/JsonApiDataType";
 import {JsonApiObject} from "./JsonApiObject";
-import JsonApiError from "./JsonApiError";
+import {JsonApiError} from "./JsonApiError";
 import {JsonApiArray} from "./JsonApiArray";
 
 /**

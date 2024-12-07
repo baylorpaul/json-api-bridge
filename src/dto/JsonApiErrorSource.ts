@@ -1,6 +1,6 @@
 
 /** A <a href="https://jsonapi.org/">JSON:API</a> error source. */
-export default interface JsonApiErrorSource {
+export interface JsonApiErrorSource {
 	/**
 	 * a JSON Pointer [RFC6901] to the value in the request document that caused the error [e.g. "/data" for a primary
 	 * data object, or "/data/attributes/title" for a specific attribute]. This MUST point to a value in the request

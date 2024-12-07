@@ -1,8 +1,8 @@
-import JsonApiErrorSource from "./JsonApiErrorSource";
+import {JsonApiErrorSource} from "./JsonApiErrorSource";
 import {JsonApiLinkType} from "./types/JsonApiLinkType";
 
 /** A <a href="https://jsonapi.org/">JSON:API</a> error. */
-export default interface JsonApiError {
+export interface JsonApiError {
 	/** a unique identifier for this particular occurrence of the problem. */
 	id?: string,
 	/** links related to the error object */
