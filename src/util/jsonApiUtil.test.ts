@@ -2,9 +2,12 @@ import {describe, expect, test} from "@jest/globals";
 import {findIncludedResource} from "./jsonApiUtil";
 import {JsonApiPage} from "../dto/JsonApiPage";
 import {JsonApiTopLevelObject} from "../dto/JsonApiTopLevelObject";
-import {JsonApiResource} from "../dto/JsonApiResource";
-import {JsonApiObject} from "../dto/JsonApiObject";
-import {JsonApiResourceIdentifier} from "../dto/JsonApiResourceIdentifier";
+import {
+	JsonApiRelationship,
+	JsonApiRelationshipSubset,
+	JsonApiResource,
+	JsonApiResourceRequiredFields
+} from "../dto/JsonApiResource";
 
 ////////////////////////////////////////////////////////////////////////////////
 // Entity - USER
@@ -16,29 +19,34 @@ export interface UserAttrs {
 	email: string,
 	name: string,
 	/** The password is not provided by the server, but may be submitted during a password change */
-	password: string|undefined,
+	password?: string,
 	enabled: boolean,
 	emailVerified: boolean,
 	created: string,
 	updated: string,
 }
 
-export interface UserRelationships {
+export interface UserRelationshipsSubset {
 	// none
 }
 
-export class User implements JsonApiResource {
-	type: string = RESOURCE_TYPE_USER;
+export type UserRelationships = UserRelationshipsSubset;
+
+export class UserSubset implements JsonApiResource {
+	readonly type: string = RESOURCE_TYPE_USER;
 	id?: string;
 	attributes?: Partial<UserAttrs>;
-	relationships?: Partial<UserRelationships>;
+	relationships?: Partial<UserRelationshipsSubset>;
 
-	constructor(id?: string, attributes?: Partial<UserAttrs>, relationships?: Partial<UserRelationships>) {
+	constructor(id?: string, attributes?: Partial<UserAttrs>, relationships?: Partial<UserRelationshipsSubset>) {
 		this.id = id;
 		this.attributes = attributes;
 		this.relationships = relationships;
 	}
 }
+
+export type User = UserSubset &
+	JsonApiResourceRequiredFields<UserAttrs, UserRelationships>;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Entity - Granting Token
@@ -57,22 +65,29 @@ export interface GrantingTokenAttrs {
 	updated: string,
 }
 
-export interface GrantingTokenRelationships {
-	user: JsonApiObject<JsonApiResourceIdentifier>,
+export interface GrantingTokenRelationshipsSubset {
+	user: JsonApiRelationshipSubset,
 }
 
-export class GrantingToken implements JsonApiResource {
-	type: string = RESOURCE_TYPE_GRANTING_TOKEN;
+export type GrantingTokenRelationships = GrantingTokenRelationshipsSubset & {
+	user: JsonApiRelationship,
+};
+
+export class GrantingTokenSubset<A extends GrantingTokenAttrs = GrantingTokenAttrs> implements JsonApiResource {
+	readonly type: string = RESOURCE_TYPE_GRANTING_TOKEN;
 	id?: string;
 	attributes?: Partial<GrantingTokenAttrs>;
-	relationships?: Partial<GrantingTokenRelationships>;
+	relationships?: Partial<GrantingTokenRelationshipsSubset>;
 
-	constructor(id?: string, attributes?: Partial<GrantingTokenAttrs>, relationships?: Partial<GrantingTokenRelationships>) {
+	constructor(id?: string, attributes?: Partial<A>, relationships?: Partial<GrantingTokenRelationshipsSubset>) {
 		this.id = id;
 		this.attributes = attributes;
 		this.relationships = relationships;
 	}
 }
+
+export type GrantingToken<A extends GrantingTokenAttrs = GrantingTokenAttrs> = GrantingTokenSubset<A> &
+	JsonApiResourceRequiredFields<GrantingTokenAttrs, GrantingTokenRelationships>;
 
 export enum TokenPurpose {
 	APP_REFRESH_TOKEN = "APP_REFRESH_TOKEN",
@@ -201,7 +216,8 @@ describe('JSON:API tests', () => {
 					emailVerified: true,
 					created: "2023-12-15T00:31:23.589Z",
 					updated: "2024-01-29T18:44:12.765Z"
-				}
+				},
+				relationships: {},
 			}
 		};
 
